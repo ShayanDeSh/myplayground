@@ -1,0 +1,9 @@
+		LDR		R0, =0x8000000
+		MOV		R1, #0
+AGAIN	ADD		R1, R1, #1
+		LDR		R2, [R0]
+		ADD		R3, R3, R2
+		ADD		R0, R0, #4
+		CMP		R1, #10
+		BNE		AGAIN
+		END
