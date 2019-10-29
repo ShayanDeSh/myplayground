@@ -1,0 +1,6 @@
+git add <files>
+git reset <files>
+git status --short -s
+git diff --staged
+git commit -a(adds every tracked unstaged files) -m "commit description"
+git mv (use to rename or move files with auto stage)
