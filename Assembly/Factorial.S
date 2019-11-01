@@ -1,0 +1,18 @@
+		LDR		R0,		=8	;N
+		BL		FACT
+RETURN	END
+		
+FACT		MOV		R10,		R0
+		MOV		R1,		#0	;i
+		MOV		R2,		#1	;RESULT
+AGAIN	ADD		R1,		R1,		#1
+		MOV		R4,		R2
+MUL		ADD		R3,		R3,		#1
+		CMP		R3,		R1
+		BEQ		CONTINUE
+		ADD		R2,		R2,		R4
+		B		MUL
+CONTINUE	CMP		R1,		R10
+		MOV		R3,		#0
+		BNE		AGAIN
+		B		RETURN
