@@ -1,0 +1,6 @@
+		LDR		R0,		=0xF635225A
+		LDR		R1,		=0xF4129FFB
+		MOV		R2,		#0xF4
+		MOV		R3,		#0x61
+		ADDS		R5,		R0,		R1
+		ADC		R6,		R2,		R3
