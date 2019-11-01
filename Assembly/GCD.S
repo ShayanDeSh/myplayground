@@ -1,0 +1,16 @@
+		MOV		R0,		#144
+		MOV		R1,		#169
+		BL		GCD
+RETURN	END
+		
+		
+GCD		MOV		R2,		R0
+		MOV		R3,		R1
+AGAIN	SUBS		R2,		R2,		R3
+		BEQ		RESULT
+		BPL		AGAIN
+		ADD		R1,		R2,		R3
+		MOV		R0,		R3
+		B		GCD
+RESULT	MOV		R4,		R3
+		B		RETURN
