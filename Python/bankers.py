@@ -42,8 +42,8 @@ def safe(avail, need, alloc):
 if __name__ == '__main__':
     flag = True
     res = []
-    avail = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
-    # avail = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    avail = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8]
+    # avail = [6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
     max = []
     alloc = []
     need = []
