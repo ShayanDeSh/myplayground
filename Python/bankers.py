@@ -3,38 +3,47 @@ import random
 import numpy as np
 
 
-def request(i):
+def request(max):
     hold = []
     for j in range(10):
-        hold.append(random.randint(0, max[i][j]))
+        hold.append(random.randint(0, max[j]))
     return np.matrix(hold)
 
 
-def release(i, req, avail, alloc):
+def release(i, req, avail, alloc, need):
     avail += req + alloc[i]
-    alloc.pop(i)
+    need.pop(i)
+    return np.delete(alloc, 0, axis=0)
 
 
 def check(x, y):
     for i in range(10):
         if x[i] > y[i]:
-            flag = False
+            return False
     return True
 
 
-def safe(avail_shadow, shadow_need, alloc_shadow):
-    for i in range(10):
-        flag = check(shadow_need, avail_shadow)
+def safe(avail, need, alloc):
+    if len(need) == 0:
+        return True
+    for i in range(len(need)):
+        flag = check(need[i], avail)
         if not flag:
             continue
-        release(i, np.zeros([1, 10]), avail_shadow, alloc_shadow)
-
+        need_shadow = need.copy()
+        # alloc_shadow = alloc.copy()
+        avail_shadow = avail.copy()
+        alloc_shadow = release(i, np.zeros([1, 10], dtype=np.int32)[0], avail_shadow, alloc, need_shadow)
+        if safe(avail_shadow, need_shadow, alloc_shadow):
+            return True
+    return False
 
 
 if __name__ == '__main__':
     flag = True
     res = []
     avail = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+    # avail = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     max = []
     alloc = []
     need = []
@@ -49,11 +58,11 @@ if __name__ == '__main__':
             hold.append(random.randint(0, max[i][j]))
         alloc.append(hold)
 
-    maxMatrix = np.matrix(max)
-    allocMatrix = np.matrix(alloc)
+    maxMatrix = np.array(max)
+    alloc = np.array(alloc)
 
     for i in range(10):
-        need.append(maxMatrix[i] - allocMatrix[i])
+        need.append(maxMatrix[i] - alloc[i])
     hold = np.zeros([1, 10])
     # print(alloc)
     for i in range(10):
@@ -62,22 +71,45 @@ if __name__ == '__main__':
     res = hold + avail
     print(res)
     while flag:
-        preq = random.randint(0, 10)
-        requested = request(preq)
+        preq = random.randint(0, len(alloc) - 1)
+        requested = request(need[preq])
         need_shadow = need.copy()
-        avail_shadow = avail - requested
-        for i in avail_shadow:
+        avail_shadow = np.array(avail - requested)
+        for i in avail_shadow[0]:
             if i < 0:
-                print(preq + " requested " + requested + " and failed because lack of available resource")
+                print("row " + str(preq) + " requested " + str(
+                    requested) + " and failed because lack of available resource")
                 continue
+        need_shadow[preq] = np.array(need_shadow[preq] - requested)[0]
         zf = True
-        for i in avail_shadow:
+        for i in need_shadow[preq]:
             if i != 0:
                 zf = False
+                break
         if zf:
-            print(preq + " is done")
-            release(preq, requested, avail, alloc)
+            print("row " + str(preq) + " requested " + str(
+                requested) + "and now is done.")
+            alloc = release(preq, requested, avail, alloc, need)
+            print("allocates now are:")
+            print(alloc)
+            print("needs now are:")
+            print(need)
+            print("availables now are:")
+            print(avail)
+            if len(alloc) == 0:
+                flag = False
             continue
-        need_shadow[preq] = need_shadow[preq] - requested
         alloc_shadow = alloc.copy()
-        safe(avail_shadow, need_shadow, alloc_shadow)
+        alloc_shadow[preq] = np.array(requested + alloc_shadow[preq])[0]
+        state = safe(avail_shadow[0], need_shadow, alloc_shadow)
+        if not state:
+            print("row " + str(preq) + " requested " + str(requested) + " and deadlock happened so we skip the request")
+        else:
+            print("row " + str(preq) + " requested " + str(requested) + " and we are in safe state")
+            need = need_shadow
+            avail = avail_shadow
+            alloc = alloc_shadow
+            print("availables now are:")
+            print(avail)
+
+    print("All are done without deadlock")
