@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace AsyncLearning {
     class Program {
         static void Main(string[] args) {
-            FooAsync2();
+            Console.WriteLine(FooAsync2().Result);
             Console.ReadLine();
         }
 
-        static async void FooAsync() {
+        static async Task<int> FooAsync() {
+            return 42;
         }
 
-        static void FooAsync2() {
+        static Task<int> FooAsync2() {
             var stateMachine = new FooAsyncStateMachine();
 
-            stateMachine.MethodBuilder = new AsyncVoidMethodBuilder();
-            
+            stateMachine.MethodBuilder = new AsyncTaskMethodBuilder<int>();
+
             stateMachine.MethodBuilder.Start(ref stateMachine);
+
+            return stateMachine.MethodBuilder.Task;
         }
 
         struct FooAsyncStateMachine : IAsyncStateMachine {
-            public AsyncVoidMethodBuilder MethodBuilder;
+            public AsyncTaskMethodBuilder<int> MethodBuilder;
 
             public void MoveNext() {
                 // State machine
-                MethodBuilder.SetResult();
+                MethodBuilder.SetResult(42);
             }
 
             public void SetStateMachine(IAsyncStateMachine stateMachine) {
