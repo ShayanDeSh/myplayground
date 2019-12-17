@@ -1,0 +1,20 @@
+# Link on Crackmes:
+https://www.hackthissite.org/missions/application/index.php
+
+# Soloution
+Open exe file using a hex editor and search for http you will see the folowing subdomain "/application/app2/keys123.txt"
+
+# Passwords
+The passwords there are:
+63482-74819-88456-98378
+45910-18394-85113-51290
+10110-19101-59111-41563
+11424-74719-19578-99238
+25182-28381-85611-85258
+62351-12939-12481-58020
+63482-74819-88456-98378
+45910-18394-85113-51290
+18381-21931-98680-86523
+32910-21944-12391-51939
+12389-16781-72893-71892
+83478-91933-89823-98511
