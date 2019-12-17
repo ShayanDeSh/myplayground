@@ -10,6 +10,7 @@ namespace AsyncLearning {
         }
 
         static async Task<int> FooAsync() {
+            await Task.Delay(5000);
             return 42;
         }
 
@@ -25,14 +26,34 @@ namespace AsyncLearning {
 
         struct FooAsyncStateMachine : IAsyncStateMachine {
             public AsyncTaskMethodBuilder<int> MethodBuilder;
+            private int state;
+            private TaskAwaiter awaiter;
 
             public void MoveNext() {
                 // State machine
-                MethodBuilder.SetResult(42);
+                if (state == 0) {
+                    awaiter = Task.Delay(5000).GetAwaiter();
+                    if (awaiter.IsCompleted) {
+                        state = 1;
+                        goto state1;
+                    } else {
+                        state = 1;
+                        MethodBuilder.AwaitUnsafeOnCompleted(ref awaiter, ref this);
+                    }
+
+                    return;
+                }
+
+                state1:
+                if (state == 1) {
+                    awaiter.GetResult();
+                    MethodBuilder.SetResult(42);
+                    return;
+                }
             }
 
             public void SetStateMachine(IAsyncStateMachine stateMachine) {
-                throw new NotImplementedException();
+                MethodBuilder.SetStateMachine(stateMachine);
             }
         }
     }
