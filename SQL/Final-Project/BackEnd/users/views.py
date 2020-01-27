@@ -21,7 +21,7 @@ def add_user(request):
         return HttpResponse(status=status.HTTP_201_CREATED)
     except IntegrityError as e:
         print(e)
-        return HttpResponse(e, status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponse(e, status=status.HTTP_409_CONFLICT)
 
 
 @require_http_methods(["POST"])
@@ -38,6 +38,4 @@ def add_address(request):
                 [landline, address_name, address, personal_id])
         return HttpResponse(status=status.HTTP_201_CREATED)
     except IntegrityError as e:
-        return HttpResponse(e, status=status.HTTP_400_BAD_REQUEST)
-
-
+        return HttpResponse(e, status=status.HTTP_409_CONFLICT)
