@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import connection, IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from rest_framework import status
+from rest_framework.utils import json
 
 
 @require_http_methods(["POST"])
@@ -39,3 +39,39 @@ def add_address(request):
         return HttpResponse(status=status.HTTP_201_CREATED)
     except IntegrityError as e:
         return HttpResponse(e, status=status.HTTP_409_CONFLICT)
+
+
+@require_http_methods(['DELETE'])
+@csrf_exempt
+def delete_user(request):
+    try:
+        personal_id = json.loads(request.body).get('personal_id')
+        cursor = connection.cursor()
+        cursor.execute(
+            "delete from customers where personal_id = %s", [personal_id]
+        )
+        return HttpResponse(status.HTTP_202_ACCEPTED)
+    except IntegrityError as e:
+        return HttpResponse(status.HTTP_406_NOT_ACCEPTABLE)
+
+
+@require_http_methods(['PUT'])
+@csrf_exempt
+def update_user(request):
+    try:
+        parsed_body = json.loads(request.body)
+        first_name = parsed_body.get("first_name")
+        last_name = parsed_body.get("last_name")
+        phone_number = parsed_body.get("phone_number")
+        age = parsed_body.get("age")
+        personal_id = parsed_body.get("personal_id")
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "update customers "
+                "set first_name = %s, last_name = %s, phone_number = %s, age = %s "
+                "where personal_id = %s",
+                [first_name, last_name, phone_number, age, personal_id]
+            )
+        return HttpResponse(status.HTTP_202_ACCEPTED)
+    except IntegrityError as e:
+        return HttpResponse(e, status.HTTP_406_NOT_ACCEPTABLE)
