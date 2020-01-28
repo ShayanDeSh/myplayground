@@ -35,7 +35,6 @@ ALTER TABLE public.address
 CREATE TABLE public.sale_factor
 (
     factor_id integer NOT NULL DEFAULT nextval('sale_factor_factor_id_seq'::regclass),
-    total_price bigint NOT NULL,
     date date NOT NULL,
     personal_id character varying(20) COLLATE pg_catalog."default",
     address_id integer,

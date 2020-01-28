@@ -60,23 +60,27 @@ def add_shopping_store(request):
 @require_http_methods(["POST"])
 @csrf_exempt
 def add_order(request):
-    parsed_body = json.loads(request.body)
-    items = parsed_body['items']
-    personal_id = parsed_body['personal_id']
-    address_id = parsed_body['address_id']
-    cursor = connection.cursor()
-    cursor.execute(
-        "insert into sale_factor (date, personal_id, address_id) values (%s, %s, %s) RETURNING factor_id",
-        [datetime.date.today(), personal_id, address_id]
-    )
-    factor_id = cursor.fetchone()[0]
-    for item in items:
+    try:
+        parsed_body = json.loads(request.body)
+        items = parsed_body['items']
+        personal_id = parsed_body['personal_id']
+        address_id = parsed_body.get('address_id')
+        delivery_id = parsed_body.get('delivery_id')
+        cursor = connection.cursor()
         cursor.execute(
-            "select current_price from menu where item_name = %s", [item['item_name']]
+            "insert into sale_factor (date, personal_id, address_id, delivery_id) values (%s, %s, %s, %s) RETURNING factor_id",
+            [datetime.date.today(), personal_id, address_id, delivery_id]
         )
-        price = cursor.fetchone()[0]
-        cursor.execute(
-            "insert into requested_items values (%s, %s, %s, %s)",
-            [factor_id, item['item_name'], item['number'], price]
-        )
-    return HttpResponse(status=status.HTTP_201_CREATED)
+        factor_id = cursor.fetchone()[0]
+        for item in items:
+            cursor.execute(
+                "select current_price from menu where item_name = %s", [item['item_name']]
+            )
+            price = cursor.fetchone()[0]
+            cursor.execute(
+                "insert into requested_items values (%s, %s, %s, %s)",
+                [factor_id, item['item_name'], item['number'], price]
+            )
+        return HttpResponse(status=status.HTTP_201_CREATED)
+    except IntegrityError as e:
+        return HttpResponse(e, status=status.HTTP_406_NOT_ACCEPTABLE)
