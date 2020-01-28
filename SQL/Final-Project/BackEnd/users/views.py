@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.db import connection, IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -75,3 +75,35 @@ def update_user(request):
         return HttpResponse(status.HTTP_202_ACCEPTED)
     except IntegrityError as e:
         return HttpResponse(e, status.HTTP_406_NOT_ACCEPTABLE)
+
+
+def get_report(request, personal_id):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select * from sale_factor natural join requested_items where personal_id = %s order by factor_id",
+            [personal_id]
+        )
+        columns = [col[0] for col in cursor.description]
+        factors = [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+        cursor.execute(
+            "WITH count_it as "
+            "(select item_name, count(*) as num "
+            "from sale_factor natural join requested_items where personal_id = %s"
+            " group by item_name) "
+            "select  num, item_name from count_it where num = (select max(num) from count_it)",
+            [personal_id]
+        )
+        fav = cursor.fetchone()
+        favorite = {
+            "item_name": fav[1],
+            "repetition": fav[0]
+        }
+        report = {
+            "factors": factors,
+            "favorite": favorite
+        }
+    return JsonResponse(report)

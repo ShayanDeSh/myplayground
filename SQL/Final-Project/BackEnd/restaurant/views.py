@@ -263,3 +263,17 @@ def get_report(request, year, month, day):
         "buy_factor": buy_factor
     }
     return JsonResponse(report)
+
+
+require_http_methods(['GET'])
+
+
+@csrf_exempt
+def get_shopping_store(request):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select store_id, store_name from stores where active = true"
+        )
+        columns = [col[0] for col in cursor.description]
+        stores = {"stores": [dict(zip(columns, row)) for row in cursor.fetchall()]}
+    return JsonResponse(stores)
