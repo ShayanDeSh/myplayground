@@ -12,5 +12,6 @@ urlpatterns = [
     path('stores/update', views.update_shopping_store, name='update_shopping_store'),
     path('stores/delete', views.delete_shopping_store, name='delete_shopping_store'),
     path('orders/insert', views.add_order, name='add_order'),
-    path('buy/insert', views.add_buy, name='add_buy')
+    path('buy/insert', views.add_buy, name='add_buy'),
+    path('report/<int:year>/<int:month>/<int:day>', views.get_report, name='get_report')
 ]

@@ -1,5 +1,5 @@
 import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.db import connection, IntegrityError, transaction, InternalError
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -78,7 +78,7 @@ def add_order(request):
             )
             price = 0
             row = cursor.fetchone()
-            if row !=  None:
+            if row != None:
                 price = row[0]
             cursor.execute(
                 "insert into requested_items values (%s, %s, %s, %s)",
@@ -116,6 +116,7 @@ def add_buy(request):
     except IntegrityError as e:
         return HttpResponse(e, status.HTTP_406_NOT_ACCEPTABLE)
 
+
 @require_http_methods(['PUT'])
 @csrf_exempt
 def update_delivery_man(request):
@@ -147,6 +148,7 @@ def delete_delivery_man(request):
         return HttpResponse(status.HTTP_202_ACCEPTED)
     except IntegrityError as e:
         return HttpResponse(status.HTTP_406_NOT_ACCEPTABLE)
+
 
 @require_http_methods(['PUT'])
 @csrf_exempt
@@ -207,3 +209,57 @@ def delete_item_from_menu(request):
         "delete from menu where item_name = %s", [item_name]
     )
     return HttpResponse(status.HTTP_202_ACCEPTED)
+
+
+@require_http_methods(['GET'])
+@csrf_exempt
+def get_report(request, year, month, day):
+    # date = str(year) + "-" + str(month) + "-" + str(day)
+    date = datetime.date(year, month, day)
+    with connection.cursor() as cursor:
+        global profit
+        cursor.execute(
+            "select sum(price * number) from requested_items natural join sale_factor where date = %s::date",
+            [date]
+        )
+        gain = cursor.fetchone()
+        if gain == None:
+            gain = 0
+        else:
+            gain = gain[0]
+        cursor.execute(
+            'select sum(price) from bought_stuffs natural join sale_factor where date = %s::date',
+            [date]
+        )
+        pain = cursor.fetchone()
+        if pain == None:
+            pain = 0
+        else:
+            pain = pain[0]
+        cursor.execute(
+            'select sum(price * number), factor_id from requested_items natural join sale_factor where date = %s::date group by factor_id',
+            [date]
+        )
+        requested_list = cursor.fetchall()
+        cursor.execute(
+            'select sum(price), buy_factor_id from bought_stuffs natural join sale_factor where date = %s::date group by buy_factor_id',
+            [date]
+        )
+        bought_items = cursor.fetchall()
+    sale_facotrs = []
+    for item in requested_list:
+        fact = {"total_price": item[0], "factor_id:": item[1]}
+        sale_facotrs.append(fact)
+    buy_factor = []
+    for item in bought_items:
+        fact = {"total_price": item[0], "factor_id:": item[1]}
+        buy_factor.append(fact)
+    profit = gain - pain
+    report = {
+        "profit": profit,
+        "total_buy": pain,
+        "total_sell": gain,
+        "sale_facotrs": sale_facotrs,
+        "buy_factor": buy_factor
+    }
+    return JsonResponse(report)
