@@ -61,6 +61,7 @@ def add_shopping_store(request):
 def add_order(request):
     try:
         parsed_body = json.loads(request.body)
+        print(parsed_body)
         items = parsed_body['items']
         personal_id = parsed_body.get('personal_id')
         address_id = parsed_body.get('address_id')
@@ -88,7 +89,7 @@ def add_order(request):
     except IntegrityError as e:
         return HttpResponse(e, status=status.HTTP_406_NOT_ACCEPTABLE)
     except InternalError as e:
-        return HttpResponse(e, status=status.HTTP_406_NOT_ACCEPTABLE)
+        return HttpResponse(e, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     except Exception as e:
         return HttpResponse(e, status=status.HTTP_406_NOT_ACCEPTABLE)
 
