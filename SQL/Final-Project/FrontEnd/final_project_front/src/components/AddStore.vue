@@ -4,42 +4,30 @@
             <div style="padding-left: 50px">
                 <div class="item" style="width: 100%">
                     <div style="width: 25%; display: inline-block;">
-                        <label>personal id</label>
+                        <label>store id</label>
                     </div>
                     <div style="width: 75% ; display: inline-block;">
-                        <input v-model="personal_id" name type="text"/>
+                        <input v-model="store_id" name type="text"/>
                     </div>
                 </div>
-                <div class="item">
+            </div>
+            <div style="padding-left: 50px">
+                <div class="item" style="width: 100%">
                     <div style="width: 25%; display: inline-block;">
-                        <label>first name</label>
+                        <label>store name</label>
                     </div>
                     <div style="width: 75% ; display: inline-block;">
-                        <input v-model="first_name" name type="text"/>
+                        <input v-model="store_name" name type="text"/>
                     </div>
                 </div>
-                <div class="item">
+            </div>
+            <div style="padding-left: 50px">
+                <div class="item" style="width: 100%">
                     <div style="width: 25%; display: inline-block;">
-                        <label>last name</label>
+                        <label>Active:</label>
                     </div>
                     <div style="width: 75% ; display: inline-block;">
-                        <input v-model="last_name" name type="text"/>
-                    </div>
-                </div>
-                <div class="item">
-                    <div style="width: 25%; display: inline-block;">
-                        <label>phone number</label>
-                    </div>
-                    <div style="width: 75% ; display: inline-block;">
-                        <input v-model="phone_number" name type="text"/>
-                    </div>
-                </div>
-                <div class="item">
-                    <div style="width: 25%; display: inline-block;">
-                        <label>age</label>
-                    </div>
-                    <div style="width: 75% ; display: inline-block;">
-                        <input v-model="age" name type="text"/>
+                        <input v-model="active" type="checkbox" name="vehicle1" value="Bike"><br>
                     </div>
                 </div>
             </div>
@@ -55,33 +43,26 @@
                     style="margin-top: 20px; width: 30%; margin-right: 3px"
                     type="button"
             />
-            <input @click="deletei" value="Delete" style="margin-top: 20px; width: 30%;" type="button"/>
-        </div>
+            <input @click="deletei" value="Delete" style="margin-top: 20px; width: 30%;" type="button"/></div>
     </div>
 </template>
 
 <script>
   export default {
-    name: "users",
+    name: "add_store",
     data() {
       return {
-        personal_id: null,
-        first_name: null,
-        last_name: null,
-        phone_number: null,
-        age: null
+        store_name: null,
+        store_id: null,
+        active: false
       };
     },
     methods: {
       send() {
         this.$http.post(
-          "http://127.0.0.1:9090/users/insert/",
+          "http://127.0.0.1:9090/restaurant/stores/insert",
           JSON.stringify({
-            personal_id: this.personal_id,
-            first_name: this.first_name,
-            last_name: this.last_name,
-            phone_number: this.phone_number,
-            age: this.age
+            store_name: this.store_name
           }),
           {
             headers: {
@@ -92,13 +73,11 @@
       },
       update() {
         this.$http.put(
-          "http://127.0.0.1:9090/users/update/",
+          "http://127.0.0.1:9090/restaurant/stores/update",
           JSON.stringify({
-            personal_id: this.personal_id,
-            first_name: this.first_name,
-            last_name: this.last_name,
-            phone_number: this.phone_number,
-            age: this.age
+            store_name: this.store_name,
+            active: this.active,
+            store_id: this.store_id
           }),
           {
             headers: {
@@ -109,9 +88,18 @@
       },
       deletei() {
         this.$http.delete(
-          "http://127.0.0.1:9090/users/delete/",
+          "http://127.0.0.1:9090/restaurant/stores/delete",
           {
-            data:{personal_id: this.personal_id}
+            data: {
+              store_name: this.store_name,
+              active: this.active,
+              store_id: this.store_id
+            }
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
           }
         );
       }

@@ -49,6 +49,7 @@ def add_address(request):
 @csrf_exempt
 def delete_user(request):
     try:
+        print(request.body)
         personal_id = json.loads(request.body).get('personal_id')
         cursor = connection.cursor()
         cursor.execute(

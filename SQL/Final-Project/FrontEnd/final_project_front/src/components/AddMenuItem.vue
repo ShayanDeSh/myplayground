@@ -19,20 +19,21 @@
                     </div>
                 </div>
             </div>
-      <input
-        @click="send"
-        value="Send"
-        style="margin-top: 20px; width: 30%; margin-right: 3px;"
-        type="button"
-      />
-      <input
-        @click="send"
-        value="Update"
-        style="margin-top: 20px; width: 30%; margin-right: 3px"
-        type="button"
-      />
-      <input @click="send" value="Delete" style="margin-top: 20px; width: 30%;" type="button" />        </div>
-    </div></template>
+            <input
+                    @click="send"
+                    value="Send"
+                    style="margin-top: 20px; width: 30%; margin-right: 3px;"
+                    type="button"
+            />
+            <input
+                    @click="update"
+                    value="Update"
+                    style="margin-top: 20px; width: 30%; margin-right: 3px"
+                    type="button"
+            />
+            <input @click="deletei" value="Delete" style="margin-top: 20px; width: 30%;" type="button"/></div>
+    </div>
+</template>
 
 <script>
   export default {
@@ -40,7 +41,7 @@
     data() {
       return {
         item_name: null,
-        current_price: null,
+        current_price: null
       };
     },
     methods: {
@@ -49,8 +50,38 @@
           "http://127.0.0.1:9090/restaurant/menu/insert",
           JSON.stringify({
             item_name: this.item_name,
-            current_price: this.current_price,
+            current_price: this.current_price
           })
+          , {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
+      },
+      update() {
+        this.$http.put(
+          "http://127.0.0.1:9090/restaurant/menu/update",
+          JSON.stringify({
+            item_name: this.item_name,
+            current_price: this.current_price
+          })
+          , {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
+      },
+      deletei() {
+        this.$http.delete(
+          "http://127.0.0.1:9090/restaurant/menu/delete",
+          {
+            data:
+              {
+                item_name: this.item_name
+              }
+          }
           , {
             headers: {
               "Content-Type": "application/json"

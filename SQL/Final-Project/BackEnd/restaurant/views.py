@@ -27,10 +27,11 @@ def add_item_to_menu(request):
 @csrf_exempt
 def add_delivery_man(request):
     try:
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        phone_number = request.POST.get('phone_number')
-        delivery_id = request.POST.get('delivery_id')
+        parsed_body = json.loads(request.body)
+        first_name = parsed_body.get('first_name')
+        last_name = parsed_body.get('last_name')
+        phone_number = parsed_body.get('phone_number')
+        delivery_id = parsed_body.get('delivery_id')
         with connection.cursor() as cursor:
             cursor.execute(
                 "insert into delivery values (%s, %s, %s, %s)",
@@ -45,7 +46,7 @@ def add_delivery_man(request):
 @csrf_exempt
 def add_shopping_store(request):
     try:
-        store_name = request.POST.get('store_name')
+        store_name = json.loads(request.body).get('store_name')
         with connection.cursor() as cursor:
             cursor.execute(
                 "insert into stores (store_name, active) values (%s, %s)",
@@ -99,9 +100,9 @@ def add_order(request):
 @csrf_exempt
 def add_buy(request):
     try:
-        parsed_boyd = json.loads(request.body)
-        items = parsed_boyd.get('items')
-        store_id = parsed_boyd.get('store_id')
+        parsed_body = json.loads(request.body)
+        items = parsed_body.get('items')
+        store_id = parsed_body.get('store_id')
         cursor = connection.cursor()
         cursor.execute(
             "insert into buy_factor (date, store_id)"
@@ -163,7 +164,7 @@ def update_shopping_store(request):
         with connection.cursor() as cursor:
             cursor.execute(
                 "update stores set store_name = %s, active = %s"
-                "where store_id = %s", [store_name, active, store_id]
+                " where store_id = %s", [store_name, active, store_id]
             )
         return HttpResponse(status.HTTP_202_ACCEPTED)
     except IntegrityError as e:
@@ -191,10 +192,10 @@ def update_menu_item(request):
         parsed_body = json.loads(request.body)
         p_item_name = parsed_body.get("p_item_name")
         item_name = parsed_body.get("item_name")
-        price = parsed_body.get("price")
+        price = parsed_body.get("current_price")
         with connection.cursor() as cursor:
             cursor.execute(
-                "update menu set item_name = %s, price = %s where item_name = %s", [item_name, price, p_item_name]
+                "update menu set item_name = %s, current_price = %s where item_name = %s", [item_name, price, p_item_name]
             )
         return HttpResponse(status.HTTP_202_ACCEPTED)
     except IntegrityError as e:

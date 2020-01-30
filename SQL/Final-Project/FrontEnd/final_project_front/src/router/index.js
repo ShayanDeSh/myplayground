@@ -4,7 +4,8 @@ import Order from "../views/Order.vue";
 import Address from "../views/Address";
 import Menu from "../views/Menu";
 import Delivery from "../views/Delivery";
-import Buy from "../views/Buy";
+import Store from "../views/Store";
+import BuyItem from "../views/Buy";
 Vue.use(VueRouter);
 
 const routes = [
@@ -38,9 +39,14 @@ const routes = [
     component: Delivery
   },
   {
-    path: "/buy",
+    path: "/buy_item",
     name: "buy",
-    component: Buy
+    component: BuyItem
+  },
+  {
+    path: "/add_store",
+    name: "AddStore",
+    component: Store
   }
 ];
 
