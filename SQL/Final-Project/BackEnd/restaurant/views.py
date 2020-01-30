@@ -11,8 +11,9 @@ from rest_framework.utils import json
 @csrf_exempt
 def add_item_to_menu(request):
     try:
-        item_name = request.POST.get('item_name')
-        current_price = request.POST.get('current_price')
+        parsed_body = json.loads((request.body))
+        item_name = parsed_body.get('item_name')
+        current_price = parsed_body.get('current_price')
         with connection.cursor() as cursor:
             cursor.execute(
                 "INSERT INTO menu values (%s, %s)",

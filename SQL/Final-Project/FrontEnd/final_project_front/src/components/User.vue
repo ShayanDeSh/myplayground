@@ -12,83 +12,64 @@
                 </div>
                 <div class="item">
                     <div style="width: 25%; display: inline-block;">
-                        <label>address id</label>
+                        <label>first name</label>
                     </div>
                     <div style="width: 75% ; display: inline-block;">
-                        <input v-model="address_id" name="" type="text"/>
+                        <input v-model="first_name" name="" type="text"/>
                     </div>
                 </div>
                 <div class="item">
                     <div style="width: 25%; display: inline-block;">
-                        <label>delivery id</label>
+                        <label>last name</label>
                     </div>
                     <div style="width: 75% ; display: inline-block;">
-                        <input v-model="delivery_id" name="" type="text"/>
+                        <input v-model="last_name" name="" type="text"/>
                     </div>
                 </div>
-                <div v-bind="key" v-for="(item, index) in items" :key="index" class="item">
+                <div class="item">
                     <div style="width: 25%; display: inline-block;">
-                        <label>item name</label>
+                        <label>phone number</label>
                     </div>
-                    <div style="width: 75%; display: inline-block;">
-                        <input v-model="item.item_name" type="text"/>
+                    <div style="width: 75% ; display: inline-block;">
+                        <input v-model="phone_number" name="" type="text"/>
+                    </div>
+                </div>
+                <div class="item">
+                    <div style="width: 25%; display: inline-block;">
+                        <label>age</label>
+                    </div>
+                    <div style="width: 75% ; display: inline-block;">
+                        <input v-model="age" name="" type="text"/>
                     </div>
                 </div>
             </div>
-            <div>
-                <input v-on:click="add" value="Add"
-                       style="margin-top: 30px; width: 10%; background: #58dc88; color: white" type="button">
-                <input v-on:click="del" value="delete"
-                       style="margin-top: 30px; margin-left: 10px; width: 10%; background: #ff5456; color: white"
-                       type="button">
-
-            </div>
-            <input v-on:click="send" value="Submit" style="margin-top: 0px; width: 100%" type="button">
+            <input v-on:click="send" value="Submit" style="margin-top: 20px; width: 100%" type="button">
         </div>
     </div>
 </template>
 
 <script>
-
   export default {
-    name: "AddOrder",
-    props: {
-      msg: String
-    },
+    name: "users",
     data() {
       return {
-        x: 1,
         personal_id: null,
-        delivery_id: null,
-        address_id: null,
-        items: [{ item_name: "", number: 1 }]
+        first_name: null,
+        last_name: null,
+        phone_number: null,
+        age: null
       };
     },
     methods: {
-      add() {
-        this.x++;
-        this.items.push({ item_name: "", number: 1 });
-      },
-      del() {
-        if (this.x > 1) {
-          this.items.pop();
-          this.x--;
-        }
-      },
       send() {
-        if (this.delivery_id.empty()) {
-          this.delivery_id = null;
-        }
-        if (this.address_id.empty()) {
-          this.address_id = null;
-        }
         this.$http.post(
-          "http://127.0.0.1:9090/restaurant/orders/insert",
+          "http://127.0.0.1:9090/users/insert/",
           JSON.stringify({
             personal_id: this.personal_id,
-            address_id: this.address_id,
-            delivery_id: this.delivery_id,
-            items: this.items
+            first_name: this.first_name,
+            last_name: this.last_name,
+            phone_number: this.phone_number,
+            age: this.age
           })
           , {
             headers: {
@@ -101,7 +82,6 @@
   };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 

@@ -9,9 +9,11 @@
 import AddOrder from "@/components/AddOrder.vue";
 
 export default {
-  name: "home",
+  name: "order",
   components: {
     AddOrder
   }
 };
 </script>
+
+
