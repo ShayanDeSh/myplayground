@@ -2,38 +2,15 @@
   <div class="container">
     <div style="width: 75%; margin: auto">
       <div style="padding-left: 50px">
-        <div class="item">
-          <div style="width: 25%; display: inline-block;">
-            <label>personal_id</label>
-          </div>
-          <div style="width: 75% ; display: inline-block;">
-            <input v-model="personal_id" name type="text" />
-          </div>
-        </div>
         <div class="item" style="width: 100%">
           <div style="width: 25%; display: inline-block;">
-            <label>landline</label>
+            <label>store name</label>
           </div>
           <div style="width: 75% ; display: inline-block;">
-            <input v-model="landline" name type="text" />
+            <input v-model="store_name" name type="text" />
           </div>
         </div>
-        <div class="item">
-          <div style="width: 25%; display: inline-block;">
-            <label>address name</label>
-          </div>
-          <div style="width: 75% ; display: inline-block;">
-            <input v-model="address_name" name type="text" />
-          </div>
-        </div>
-        <div class="item">
-          <div style="width: 25%; display: inline-block;">
-            <label>address</label>
-          </div>
-          <div style="width: 75% ; display: inline-block;">
-            <input v-model="address" name type="text" />
-          </div>
-        </div>
+
       </div>
       <input
         @click="send"
@@ -47,31 +24,24 @@
         style="margin-top: 20px; width: 30%; margin-right: 3px"
         type="button"
       />
-      <input @click="send" value="Delete" style="margin-top: 20px; width: 30%;" type="button" />
-    </div>
+      <input @click="send" value="Delete" style="margin-top: 20px; width: 30%;" type="button" />    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AddAddress",
+  name: "buy_item",
   data() {
     return {
-      personal_id: null,
-      landline: null,
-      address: null,
-      address_name: null
+      store_name: null
     };
   },
   methods: {
     send() {
       this.$http.post(
-        "http://127.0.0.1:9090/users/address/insert/",
+        "http://127.0.0.1:9090/restaurant/store/insert",
         JSON.stringify({
-          personal_id: this.personal_id,
-          landline: this.landline,
-          address: this.address,
-          address_name: this.address_name
+          store_name: this.store_name
         }),
         {
           headers: {

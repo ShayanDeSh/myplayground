@@ -37,9 +37,9 @@
             </div>
             <div>
                 <input v-on:click="add" value="Add"
-                       style="margin-top: 30px; width: 10%; background: #58dc88; color: white" type="button">
+                       style="margin-top: 30px; width: 20%; background: #58dc88; color: white" type="button">
                 <input v-on:click="del" value="delete"
-                       style="margin-top: 30px; margin-left: 10px; width: 10%; background: #ff5456; color: white"
+                       style="margin-top: 30px; margin-left: 10px; width: 20%; background: #ff5456; color: white"
                        type="button">
 
             </div>
@@ -135,7 +135,7 @@
     label {
         color: #C7D7D9;
         margin-top: 2px;
-        font-size: 25px;
+        font-size: 1rem;
         width: 20%;
     }
 

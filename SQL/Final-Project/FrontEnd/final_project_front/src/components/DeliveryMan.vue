@@ -2,36 +2,36 @@
   <div class="container">
     <div style="width: 75%; margin: auto">
       <div style="padding-left: 50px">
-        <div class="item">
-          <div style="width: 25%; display: inline-block;">
-            <label>personal_id</label>
-          </div>
-          <div style="width: 75% ; display: inline-block;">
-            <input v-model="personal_id" name type="text" />
-          </div>
-        </div>
         <div class="item" style="width: 100%">
           <div style="width: 25%; display: inline-block;">
-            <label>landline</label>
+            <label>delivery id</label>
           </div>
           <div style="width: 75% ; display: inline-block;">
-            <input v-model="landline" name type="text" />
+            <input v-model="delivery_id" name type="text" />
           </div>
         </div>
         <div class="item">
           <div style="width: 25%; display: inline-block;">
-            <label>address name</label>
+            <label>first name</label>
           </div>
           <div style="width: 75% ; display: inline-block;">
-            <input v-model="address_name" name type="text" />
+            <input v-model="first_name" name type="text" />
           </div>
         </div>
         <div class="item">
           <div style="width: 25%; display: inline-block;">
-            <label>address</label>
+            <label>last name</label>
           </div>
           <div style="width: 75% ; display: inline-block;">
-            <input v-model="address" name type="text" />
+            <input v-model="last_name" name type="text" />
+          </div>
+        </div>
+        <div class="item">
+          <div style="width: 25%; display: inline-block;">
+            <label>phone number</label>
+          </div>
+          <div style="width: 75% ; display: inline-block;">
+            <input v-model="phone_number" name type="text" />
           </div>
         </div>
       </div>
@@ -54,24 +54,24 @@
 
 <script>
 export default {
-  name: "AddAddress",
+  name: "delivery_man",
   data() {
     return {
-      personal_id: null,
-      landline: null,
-      address: null,
-      address_name: null
+      delivery_id: null,
+      first_name: null,
+      last_name: null,
+      phone_number: null
     };
   },
   methods: {
     send() {
       this.$http.post(
-        "http://127.0.0.1:9090/users/address/insert/",
+        "http://127.0.0.1:9090/restaurant/delivery/insert",
         JSON.stringify({
-          personal_id: this.personal_id,
-          landline: this.landline,
-          address: this.address,
-          address_name: this.address_name
+          delivery_id: this.delivery_id,
+          first_name: this.first_name,
+          last_name: this.last_name,
+          phone_number: this.phone_number
         }),
         {
           headers: {

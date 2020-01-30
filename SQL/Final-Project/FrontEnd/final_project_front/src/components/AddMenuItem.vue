@@ -19,8 +19,19 @@
                     </div>
                 </div>
             </div>
-            <input v-on:click="send" value="Submit" style="margin-top: 20px; width: 100%" type="button">
-        </div>
+      <input
+        @click="send"
+        value="Send"
+        style="margin-top: 20px; width: 30%; margin-right: 3px;"
+        type="button"
+      />
+      <input
+        @click="send"
+        value="Update"
+        style="margin-top: 20px; width: 30%; margin-right: 3px"
+        type="button"
+      />
+      <input @click="send" value="Delete" style="margin-top: 20px; width: 30%;" type="button" />        </div>
     </div></template>
 
 <script>
@@ -84,7 +95,7 @@
     label {
         color: #C7D7D9;
         margin-top: 2px;
-        font-size: 25px;
+        font-size: 1rem;
         width: 20%;
     }
 

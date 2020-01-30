@@ -1,13 +1,19 @@
 <template>
-    <div></div>
+  <div>
+    <DeliveryMan></DeliveryMan>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: "Delivery"
-  };
+import DeliveryMan from "@/components/DeliveryMan.vue";
+
+export default {
+  name: "Delivery",
+  components: {
+    DeliveryMan
+  }
+};
 </script>
 
 <style scoped>
-
 </style>
