@@ -190,13 +190,12 @@ def delete_shopping_store(request):
 def update_menu_item(request):
     try:
         parsed_body = json.loads(request.body)
-        p_item_name = parsed_body.get("p_item_name")
         item_name = parsed_body.get("item_name")
         price = parsed_body.get("current_price")
         with connection.cursor() as cursor:
             cursor.execute(
-                "update menu set item_name = %s, current_price = %s where item_name = %s",
-                [item_name, price, p_item_name]
+                "update menu set  current_price = %s where item_name = %s",
+                [price, item_name]
             )
         return HttpResponse(status.HTTP_202_ACCEPTED)
     except IntegrityError as e:
