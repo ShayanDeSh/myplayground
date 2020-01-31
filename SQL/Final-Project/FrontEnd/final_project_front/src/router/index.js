@@ -6,6 +6,7 @@ import Menu from "../views/Menu";
 import Delivery from "../views/Delivery";
 import Store from "../views/Store";
 import BuyItem from "../views/Buy";
+import Manager from "../views/Manager";
 Vue.use(VueRouter);
 
 const routes = [
@@ -46,6 +47,16 @@ const routes = [
   {
     path: "/add_store",
     name: "AddStore",
+    component: Store
+  },
+  {
+    path: "/report/manager",
+    name: "ManagerReport",
+    component: Manager
+  },
+  {
+    path: "/report/user",
+    name: "UserReport",
     component: Store
   }
 ];
