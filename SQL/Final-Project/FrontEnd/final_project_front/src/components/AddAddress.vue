@@ -41,13 +41,6 @@
         style="margin-top: 20px; width: 30%; margin-right: 3px;"
         type="button"
       />
-      <input
-        @click="send"
-        value="Update"
-        style="margin-top: 20px; width: 30%; margin-right: 3px"
-        type="button"
-      />
-      <input @click="send" value="Delete" style="margin-top: 20px; width: 30%;" type="button" />
     </div>
   </div>
 </template>
