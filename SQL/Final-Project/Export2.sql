@@ -7,6 +7,10 @@
 
 -- Started on 2020-01-31 22:12:34
 
+\c postgres
+DROP DATABASE db_final_project;
+CREATE DATABASE db_final_project;
+\c db_final_project
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
