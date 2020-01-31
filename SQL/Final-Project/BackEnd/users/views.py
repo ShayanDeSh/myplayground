@@ -95,6 +95,13 @@ def get_report(request, personal_id):
         ]
 
         cursor.execute(
+            "select sum(price) as t_price from sale_factor natural join requested_items where personal_id = %s ",
+            [personal_id]
+        )
+
+        total_price = cursor.fetchone()[0]
+
+        cursor.execute(
             "WITH count_it as "
             "(select item_name, count(*) as num "
             "from sale_factor natural join requested_items where personal_id = %s"
@@ -109,6 +116,7 @@ def get_report(request, personal_id):
         }
         report = {
             "factors": factors,
-            "favorite": favorite
+            "favorite": favorite,
+            "total_price": total_price
         }
     return JsonResponse(report)

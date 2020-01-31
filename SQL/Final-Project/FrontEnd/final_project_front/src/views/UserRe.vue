@@ -1,10 +1,15 @@
 <template>
-    
+    <UserReport></UserReport>
 </template>
 
 <script>
+  import UserReport from "@/components/UserReport.vue";
+
   export default {
-    name: "UserReport"
+    name: "UserRe",
+    components: {
+      UserReport
+    }
   };
 </script>
 

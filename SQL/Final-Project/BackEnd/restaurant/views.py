@@ -195,7 +195,8 @@ def update_menu_item(request):
         price = parsed_body.get("current_price")
         with connection.cursor() as cursor:
             cursor.execute(
-                "update menu set item_name = %s, current_price = %s where item_name = %s", [item_name, price, p_item_name]
+                "update menu set item_name = %s, current_price = %s where item_name = %s",
+                [item_name, price, p_item_name]
             )
         return HttpResponse(status.HTTP_202_ACCEPTED)
     except IntegrityError as e:
@@ -279,4 +280,15 @@ def get_shopping_store(request):
         )
         columns = [col[0] for col in cursor.description]
         stores = {"stores": [dict(zip(columns, row)) for row in cursor.fetchall()]}
+    return JsonResponse(stores)
+
+
+@csrf_exempt
+def get_log(request, log_table):
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "select * from  " + log_table,
+        )
+        columns = [col[0] for col in cursor.description]
+        stores = {"logs": [dict(zip(columns, row)) for row in cursor.fetchall()]}
     return JsonResponse(stores)

@@ -7,6 +7,9 @@ import Delivery from "../views/Delivery";
 import Store from "../views/Store";
 import BuyItem from "../views/Buy";
 import Manager from "../views/Manager";
+import UserRe from "../views/UserRe";
+import Log from "../views/Log"
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -56,8 +59,13 @@ const routes = [
   },
   {
     path: "/report/user",
-    name: "UserReport",
-    component: Store
+    name: "Userrrrr",
+    component: UserRe
+  },
+  {
+    path: "/log",
+    name: "LogIt",
+    component: Log
   }
 ];
 

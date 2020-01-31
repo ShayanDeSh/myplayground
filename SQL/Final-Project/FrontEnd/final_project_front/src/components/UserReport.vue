@@ -3,108 +3,119 @@
         <div class="container">
             <div style="width: 75%; margin: auto">
                 <div style="padding-left: 50px">
-                    <div style="display: block; margin: auto; padding-top: 10px">
-                        <input v-model="date.year" style="display: inline; width: 5rem" placeholder="year"
-                               type="number">
-                        <input v-model="date.month" style="display: inline; width: 5rem" placeholder="month"
-                               type="number">
-                        <input v-model="date.day" style="display: inline; width: 5rem" placeholder="day" type="number">
+                    <div class="item" style="width: 100%">
+                        <div style="width: 25%; display: inline-block;">
+                            <label>personal id</label>
+                        </div>
+                        <div style="width: 75% ; display: inline-block;">
+                            <input v-model="personal_id" type="text"/>
+                        </div>
                     </div>
                     <input @click="getData" type="button" value="Get Data">
                 </div>
             </div>
         </div>
-        <div v-if="report != null" style="margin-top: 10px" class="container">
+
+        <div v-if="report != null" class="container" style="margin-top: 10px">
             <div style="width: 75%; margin: auto">
                 <div style="padding-left: 50px">
                     <div class="item" style="width: 100%">
                         <div style="width: 25%; display: inline-block;">
-                            <label>Total Buy</label>
+                            <label>favorite item</label>
                         </div>
                         <div style="width: 75% ; display: inline-block;">
-                            <input disabled :value="report.total_buy" type="text"/>
+                            <input disabled :value="report.favorite.item_name" type="text"/>
                         </div>
                     </div>
                     <div class="item" style="width: 100%">
                         <div style="width: 25%; display: inline-block;">
-                            <label>Total Sale</label>
+                            <label>number of repetition</label>
                         </div>
                         <div style="width: 75% ; display: inline-block;">
-                            <input disabled :value="report.total_sell" type="text"/>
+                            <input disabled :value="report.favorite.repetition" type="text"/>
                         </div>
                     </div>
                     <div class="item" style="width: 100%">
                         <div style="width: 25%; display: inline-block;">
-                            <label>Profit</label>
+                            <label>total price</label>
                         </div>
                         <div style="width: 75% ; display: inline-block;">
-                            <input disabled :value="report.profit" type="text"/>
+                            <input disabled :value="report.total_price" type="text"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div v-if="report != null">
-            <div v-for="(sale, index) in report.sale_factors" :key="index"
+            <div v-for="(factor, index) in report.factors" :key="index"
                  style="margin-top: 10px; padding-bottom: 15px"
                  class="container">
                 <div style="width: 75%; margin: auto">
                     <div style="padding-left: 50px">
-                        <h1 style="color: #58d78c; margin-right: 20px">Sale Factor</h1>
                         <div class="item" style="width: 100%">
                             <div style="width: 25%; display: inline-block;">
                                 <label>Factor Id</label>
                             </div>
                             <div style="width: 75% ; display: inline-block;">
-                                <input disabled :value="sale.factor_id" type="number"/>
+                                <input disabled :value="factor.factor_id" type="text"/>
                             </div>
                         </div>
                         <div class="item" style="width: 100%">
                             <div style="width: 25%; display: inline-block;">
-                                <label>Total price</label>
+                                <label>Date</label>
                             </div>
                             <div style="width: 75% ; display: inline-block;">
-                                <input disabled :value="sale.total_price" type="text"/>
+                                <input disabled :value="factor.date" type="text"/>
                             </div>
                         </div>
+
+                        <div class="item" style="width: 100%">
+                            <div style="width: 25%; display: inline-block;">
+                                <label>Item name</label>
+                            </div>
+                            <div style="width: 75% ; display: inline-block;">
+                                <input disabled :value="factor.item_name" type="text"/>
+                            </div>
+                        </div>
+
+
+                        <div class="item" style="width: 100%">
+                            <div style="width: 25%; display: inline-block;">
+                                <label>Price</label>
+                            </div>
+                            <div style="width: 75% ; display: inline-block;">
+                                <input disabled :value="factor.price" type="text"/>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div v-if="report != null">
-            <div v-for="(buy, index) in report.buy_factors" :key="index"
-                 style="margin-top: 10px; padding-bottom: 15px"
-                 class="container">
-                <div style="width: 75%; margin: auto">
-                    <div style="padding-left: 50px">
-                        <h1 style="color: #58d78c; margin-right: 20px">Buy Factor</h1>
-                        <div class="item" style="width: 100%">
-                            <div style="width: 25%; display: inline-block;">
-                                <label>Factor Id</label>
-                            </div>
-                            <div style="width: 75% ; display: inline-block;">
-                                <input disabled :value="buy.factor_id" type="number"/>
-                            </div>
-                        </div>
-                        <div class="item" style="width: 100%">
-                            <div style="width: 25%; display: inline-block;">
-                                <label>Total price</label>
-                            </div>
-                            <div style="width: 75% ; display: inline-block;">
-                                <input disabled :value="buy.total_price" type="text"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </template>
 
 <script>
-
   export default {
-    name: "UserReport"
+    name: "UserReport",
+    data() {
+      return {
+        personal_id: null,
+        report: null
+      };
+    },
+    methods: {
+      getData() {
+        this.$http.get("http://127.0.0.1:9090/users/report/" +
+          this.personal_id)
+          .then(response => {
+            this.report = response.data;
+            console.log(this.report);
+          });
+      }
+    }
   };
 </script>
 
@@ -122,7 +133,6 @@
     }
 
     input[type="text"],
-    input[type="number"],
     select,
     textarea {
         width: 50%;
