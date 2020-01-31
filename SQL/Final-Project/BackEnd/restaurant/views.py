@@ -251,19 +251,19 @@ def get_report(request, year, month, day):
         bought_items = cursor.fetchall()
     sale_facotrs = []
     for item in requested_list:
-        fact = {"total_price": item[0], "factor_id:": item[1]}
+        fact = {"total_price": item[0], "factor_id": item[1]}
         sale_facotrs.append(fact)
     buy_factor = []
     for item in bought_items:
-        fact = {"total_price": item[0], "factor_id:": item[1]}
+        fact = {"total_price": item[0], "factor_id": item[1]}
         buy_factor.append(fact)
     profit = gain - pain
     report = {
         "profit": profit,
         "total_buy": pain,
         "total_sell": gain,
-        "sale_facotrs": sale_facotrs,
-        "buy_factor": buy_factor
+        "sale_factors": sale_facotrs,
+        "buy_factors": buy_factor
     }
     return JsonResponse(report)
 
