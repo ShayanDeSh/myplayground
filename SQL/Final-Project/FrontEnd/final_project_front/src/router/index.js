@@ -8,7 +8,7 @@ import Store from "../views/Store";
 import BuyItem from "../views/Buy";
 import Manager from "../views/Manager";
 import UserRe from "../views/UserRe";
-import Log from "../views/Log"
+import Log from "../views/Log";
 
 Vue.use(VueRouter);
 
@@ -25,7 +25,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AddUsers.vue")
+      import("../views/AddUsers.vue")
   },
   {
     path: "/add_address",
@@ -66,6 +66,18 @@ const routes = [
     path: "/log",
     name: "LogIt",
     component: Log
+  },
+  {
+    path: "/query",
+    name: "EXCQuery",
+    component: () =>
+      import( "../views/Query.vue")
+  },
+  {
+    path: "/restore",
+    name: "RestoreIt",
+    component: () =>
+      import( "../views/Restore.vue")
   }
 ];
 

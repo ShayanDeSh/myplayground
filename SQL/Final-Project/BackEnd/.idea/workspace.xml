@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e1ad3d00-d27d-4346-b96c-703a116b9609" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/restaurant/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/restaurant/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/restaurant/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FrontEnd/final_project_front/src/components/UserReport.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FrontEnd/final_project_front/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../FrontEnd/final_project_front/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../FrontEnd/final_project_front/src/views/UserRe.vue" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,10 +31,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/restaurant/urls.py">
+        <entry file="file://$PROJECT_DIR$/users/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="17" column="41" lean-forward="true" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
+            <state relative-caret-position="240">
+              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -47,12 +43,16 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/restaurant/views.py">
+        <entry file="file://$PROJECT_DIR$/users/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="289" column="42" selection-start-line="289" selection-start-column="42" selection-end-line="289" selection-end-column="42" />
+            <state relative-caret-position="236">
+              <caret line="139" selection-start-line="139" selection-end-line="139" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#372#1049#0" />
+                <element signature="e#1127#1871#0" />
+                <element signature="e#1951#2340#0" />
+                <element signature="e#2417#3182#0" />
+                <element signature="e#3227#4470#0" />
               </folding>
             </state>
           </provider>
@@ -80,6 +80,7 @@
       <find>insta</find>
       <find>middle</find>
       <find>fetchon</find>
+      <find>tra</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,16 +93,16 @@
         <option value="$PROJECT_DIR$/polls/views.py" />
         <option value="$PROJECT_DIR$/BackEnd/urls.py" />
         <option value="$PROJECT_DIR$/BackEnd/settings.py" />
-        <option value="$PROJECT_DIR$/users/urls.py" />
-        <option value="$PROJECT_DIR$/users/views.py" />
         <option value="$PROJECT_DIR$/restaurant/urls.py" />
         <option value="$PROJECT_DIR$/restaurant/views.py" />
+        <option value="$PROJECT_DIR$/users/views.py" />
+        <option value="$PROJECT_DIR$/users/urls.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="491" />
-    <option name="y" value="-8" />
+    <option name="x" value="-831" />
+    <option name="y" value="-29" />
     <option name="width" value="464" />
     <option name="height" value="707" />
   </component>
@@ -127,6 +128,11 @@
               <item name="BackEnd" type="b2602c69:ProjectViewProjectNode" />
               <item name="BackEnd" type="462c0819:PsiDirectoryNode" />
               <item name="restaurant" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BackEnd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BackEnd" type="462c0819:PsiDirectoryNode" />
+              <item name="users" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -207,12 +213,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="91024000" />
+    <option name="totallyTimeSpent" value="98929000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-908" y="-20" width="916" height="1416" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3598131" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.3224299" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -287,16 +293,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/users/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="29" lean-forward="true" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BackEnd/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="867">
@@ -308,13 +304,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
           <caret line="85" selection-start-line="85" selection-end-line="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/users/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="101" column="41" selection-start-line="101" selection-start-column="41" selection-end-line="101" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -330,10 +319,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/restaurant/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="289" column="42" selection-start-line="289" selection-start-column="42" selection-end-line="289" selection-end-column="42" />
+        <state relative-caret-position="340">
+          <caret line="143" column="33" lean-forward="true" selection-start-line="139" selection-end-line="143" selection-end-column="33" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/users/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="139" selection-start-line="139" selection-end-line="139" />
+          <folding>
+            <element signature="e#372#1049#0" />
+            <element signature="e#1127#1871#0" />
+            <element signature="e#1951#2340#0" />
+            <element signature="e#2417#3182#0" />
+            <element signature="e#3227#4470#0" />
           </folding>
         </state>
       </provider>

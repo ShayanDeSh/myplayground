@@ -5,31 +5,13 @@
                 <div style="padding-left: 50px">
                     <div class="item" style="width: 100%">
                         <div style="width: 25%; display: inline-block;">
-                            <label>table name</label>
+                            <label>table_name</label>
                         </div>
                         <div style="width: 75% ; display: inline-block;">
-                            <input v-model="table_name" type="text"/>
+                            <input type="text" v-model="table_name"/>
                         </div>
                     </div>
-                    <input @click="getData" type="button" value="Get Data">
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div v-for="(log, index) in logs" :key="index" style="margin-top: 10px; padding-bottom: 15px"
-                 class="container">
-                <div style="width: 75%; margin: auto">
-                    <div style="padding-left: 50px">
-                        <div v-for="(value, name, index) in log" :key="index" class="item" style="width: 100%">
-                            <div style="width: 25%; display: inline-block;">
-                                <label>{{name}}</label>
-                            </div>
-                            <div style="width: 75% ; display: inline-block;">
-                                <input :value="value" disabled type="text"/>
-                            </div>
-                        </div>
-                    </div>
+                    <input @click="send" type="button" value="Execute">
                 </div>
             </div>
         </div>
@@ -38,21 +20,17 @@
 
 <script>
   export default {
-    name: "Logger",
+    name: "MakeRestore",
     data() {
       return {
-        table_name: null,
-        logs: []
+        table_name: null
       };
     },
     methods: {
-      getData() {
-        this.$http.get("http://127.0.0.1:9090/restaurant/log/" +
-          this.table_name)
-          .then(response => {
-            this.logs = response.data.logs;
-            console.log(this.report);
-          });
+      send() {
+        this.$http.get(
+          "http://127.0.0.1:9090/users/restore/" + this.table_name
+        );
       }
     }
   };

@@ -4,32 +4,13 @@
             <div style="width: 75%; margin: auto">
                 <div style="padding-left: 50px">
                     <div class="item" style="width: 100%">
-                        <div style="width: 25%; display: inline-block;">
-                            <label>table name</label>
-                        </div>
                         <div style="width: 75% ; display: inline-block;">
-                            <input v-model="table_name" type="text"/>
+                            <textarea v-model="query" style="width: 100%" rows="5" cols="100">
+                                Enter your query
+                            </textarea>
                         </div>
                     </div>
-                    <input @click="getData" type="button" value="Get Data">
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div v-for="(log, index) in logs" :key="index" style="margin-top: 10px; padding-bottom: 15px"
-                 class="container">
-                <div style="width: 75%; margin: auto">
-                    <div style="padding-left: 50px">
-                        <div v-for="(value, name, index) in log" :key="index" class="item" style="width: 100%">
-                            <div style="width: 25%; display: inline-block;">
-                                <label>{{name}}</label>
-                            </div>
-                            <div style="width: 75% ; display: inline-block;">
-                                <input :value="value" disabled type="text"/>
-                            </div>
-                        </div>
-                    </div>
+                    <input @click="send" type="button" value="Execute">
                 </div>
             </div>
         </div>
@@ -38,21 +19,25 @@
 
 <script>
   export default {
-    name: "Logger",
+    name: "Queryier",
     data() {
       return {
-        table_name: null,
-        logs: []
+        query: null
       };
     },
     methods: {
-      getData() {
-        this.$http.get("http://127.0.0.1:9090/restaurant/log/" +
-          this.table_name)
-          .then(response => {
-            this.logs = response.data.logs;
-            console.log(this.report);
-          });
+      send() {
+        this.$http.post(
+          "http://127.0.0.1:9090/users/query",
+          {
+            query: this.query
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
       }
     }
   };

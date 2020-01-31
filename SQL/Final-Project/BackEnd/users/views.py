@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from django.db import connection, IntegrityError, DataError
+from django.db import connection, IntegrityError, DataError, transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from rest_framework import status
@@ -120,3 +120,42 @@ def get_report(request, personal_id):
             "total_price": total_price
         }
     return JsonResponse(report)
+
+
+@require_http_methods(['POST'])
+@csrf_exempt
+@transaction.atomic
+def exc_query(request):
+    try:
+        query = json.loads(request.body).get('query')
+        splited_query = query.split()
+        table_name = splited_query[2]
+        print(splited_query[0])
+        if splited_query[0].lower() == 'create' or splited_query[0].lower() == 'drop':
+            with connection.cursor() as cursor:
+                if splited_query[0].lower() != 'drop':
+                    cursor.execute(
+                        'insert into restore values (%s, %s)', [table_name, query]
+                    )
+                cursor.execute(
+                    query
+                )
+        return HttpResponse(status.HTTP_201_CREATED)
+    except Exception as e:
+        return HttpResponse(e, status.HTTP_406_NOT_ACCEPTABLE)
+
+
+@require_http_methods(['GET'])
+@csrf_exempt
+def restore(request, table_name):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                'select query from restore where table_name = %s', [table_name]
+            )
+            query = cursor.fetchone()[0]
+            cursor.execute(
+                query
+            )
+    except Exception as e:
+        return HttpResponse(e, status.HTTP_406_NOT_ACCEPTABLE)

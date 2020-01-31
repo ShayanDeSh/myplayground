@@ -10,7 +10,9 @@
       <router-link to="/buy_item">Buy From Store</router-link>|
       <router-link to="/report/user">User Report</router-link>|
       <router-link to="/report/manager">Manager Report</router-link>|
-      <router-link to="/log">Logs</router-link>
+      <router-link to="/log">Logs</router-link>|
+      <router-link to="/query">Creat Table</router-link>|
+      <router-link to="/restore">Restore</router-link>
     </div>
     <router-view />
   </div>
