@@ -90,4 +90,16 @@ func learnTypes() {
 
 	fmt.Fprint(file, "This is how you write to a file, by the way")
 	file.Close()
+
+	// pinter and stuffs
+	p, q := learnMemory()
+	fmt.Println(*p, *q) // * follows a pointer.
+}
+
+func learnMemory() (p, q *int) {
+	p = new(int)
+	s := make([]int, 20)
+	s[3] = 7
+	r := -2
+	return &s[3], &r
 }
