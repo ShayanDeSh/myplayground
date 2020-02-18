@@ -91,9 +91,11 @@ func learnTypes() {
 	fmt.Fprint(file, "This is how you write to a file, by the way")
 	file.Close()
 
-	// pinter and stuffs
+	// pointer and stuffs
 	p, q := learnMemory()
 	fmt.Println(*p, *q) // * follows a pointer.
+
+	learnFlowControl()
 }
 
 func learnMemory() (p, q *int) {
@@ -102,4 +104,8 @@ func learnMemory() (p, q *int) {
 	s[3] = 7
 	r := -2
 	return &s[3], &r
+}
+
+func learnFlowControl() {
+
 }
