@@ -12,4 +12,12 @@ void main()
 
     printf("y = %d, x = %d \n", y, x);
 
+    asm ("leal (%1, %1, 4), %0"
+            : "=r" (y)
+            : "r" (x)
+        );
+
+    printf("y = %d, x = %d \n", y, x);
+
+
 }
