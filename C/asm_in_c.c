@@ -19,5 +19,11 @@ void main()
 
     printf("y = %d, x = %d \n", y, x);
 
+    asm ("leal (%0, %0, 4), %0"
+            : "=r" (x)
+            : "0" (x)
+        );
+
+    printf("y = %d, x = %d \n", y, x);
 
 }
