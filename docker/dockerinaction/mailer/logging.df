@@ -1,0 +1,9 @@
+FROM dockerinaction/mailer-base:0.6
+RUN apt-get update && \
+    apt-get install -y netcat
+COPY ["./log-impl", "${APPROOT}"]
+RUN chmod a+x ${APPROOT}/${APP} && \
+    chown example:example /var/log
+USER example:example
+VLOUME ["/var/log"]
+CMD ["/var/log/mailer.log"]
