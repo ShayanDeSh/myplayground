@@ -1,0 +1,3 @@
+FROM foo_base
+RUN touch downstream-evidence
+RUN ls -al
