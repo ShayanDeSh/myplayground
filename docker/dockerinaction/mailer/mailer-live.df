@@ -1,0 +1,11 @@
+FROM dockerinaction/mailer-base:0.6
+ADD ["./live-impl", "${APPROOT}"]
+RUN apt-get update && \
+    apt-get install -y curl netcat python && \
+    curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" && \
+    python get-pip.py && \
+    pip install awscli && \
+    rm get-pip.py && \
+    chmod a+x "${APPROOT}/${APP}"
+USER example:example
+CMD ["shafaghi@gmail.com", "shafaghi1378@gmail.com"]
