@@ -1,0 +1,3 @@
+FROM nginx:1.13-alpine
+HEALTHCHECK --interval=5s --retries=2 \
+    CMD nc -vz -w 2 localhost 80 || exit 1
