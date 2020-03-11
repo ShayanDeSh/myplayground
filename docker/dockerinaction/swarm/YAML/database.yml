@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+    postgres:
+        image: dockerinaction/postgres:11-alpine
+        environment:
+            POSTGRES_PASSWORD: example
+
+    mariadb:
+        image: dockerinactoin/mariadb:10-bionic
+        environment:
+            MYSQL_ROOT_PASSWORD: example
+
+    adminer:
+        image: dockerinaction/adminer:4
+        ports:
+            - 8080:8080
+        deploy:
+            replicas: 3
