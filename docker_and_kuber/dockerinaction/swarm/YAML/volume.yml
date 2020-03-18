@@ -1,0 +1,18 @@
+version: "3.7"
+volumes:
+    pgdata: #
+services:
+    postgres:
+        image: dockerinaction/postgres:11-alpine
+        volumes:
+            - type: volume
+              source: pgdata
+              target: /var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: example
+    adminer:
+        image: dockerinaction/adminer:4
+        ports:
+            - 8080:8080
+        deploy:
+            replicas: 1
