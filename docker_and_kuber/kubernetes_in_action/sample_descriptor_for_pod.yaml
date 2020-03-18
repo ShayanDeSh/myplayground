@@ -1,7 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: kubia-manual
+    name: kubia-manual-v2
+    labels:
+        creation_method: manual
+        env: prod
 spec:
     containers:
         - image: luksa/kubia
