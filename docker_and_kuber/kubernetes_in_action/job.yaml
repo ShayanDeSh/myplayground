@@ -3,6 +3,8 @@ kind: Job
 metadata:
     name: batch-job
 spec:
+    completions: 5
+    parallelism: 2
     template:
         metadata:
             labels:
