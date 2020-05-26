@@ -9,7 +9,15 @@ struct Person
     void (*say)(char* name);
 };
 
+struct Dimension
+{
+    int x;
+    int y;
+};
+
 typedef struct Person Person;
+
+typedef struct Dimension Dimension;
 
 void talk(char* name) 
 {
@@ -26,5 +34,11 @@ int main()
     p1.born_at[0] = "Pribor";
     p1.born_at[1] = "Czechia";
     p1.say(p1.born_at[1]);
+    Dimension d1 = 
+    {
+        .x = 3,
+        .y = 4,
+    };
+    printf("x = %d, y = %d\n", d1.x, d1.y);
     return 0;
 }
