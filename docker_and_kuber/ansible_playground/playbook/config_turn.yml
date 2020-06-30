@@ -1,0 +1,7 @@
+---
+- hosts: turn
+  become: yes
+  tasks:
+      - name: cotrun
+        state: present
+        update_cache: true

@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+    server1_test:
+        image: ansible_play
+        hostname: server1
+        ports:
+            - "2224:22"
+    server2_test:
+        image: ansible_play
+        hostname: server2
+        ports:
+            - "2225:22"

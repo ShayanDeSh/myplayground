@@ -1,0 +1,58 @@
+---
+- hosts: server1
+  tasks:
+      - name: adding cerbot repository
+        apt_repository:
+            repo: 'ppa:certbot/certbot'
+            update_cache: false
+            state: present
+      - name: install certbot
+        apt:
+            name: certbot
+            state: present
+      - name: install nginx
+        apt:
+            name: nginx
+            state: present
+      - name: adding bigbluebutton repo
+        apt_repository:
+            repo: 'ppa:bigbluebutton/support'
+            update_cache: false
+            state: present
+      - name: adding rmescandon repo
+        apt_repository:
+            repo: 'ppa:rmescandon/yq'
+            update_cache: false
+            state: present
+      - name: adding libreoffice repo (needed for conversion)
+        apt_repository:
+            repo: 'ppa:libreoffice/ppa'
+            update_cache: false
+            state: present
+      - name: add monogodb ppa key
+        apt_key:
+            url: https://www.mongodb.org/static/pgp/server-3.4.asc
+            state: present
+      - name: Add havegd to source list
+        lineinfile:
+            line: "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse"
+            path: /etc/apt/sources.list.d/mongodb.list
+            state: present
+            create: yes
+      - name: Add mongo to source list
+        lineinfile:
+            line: "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse"
+            path: /etc/apt/sources.list.d/mongodb.list
+            state: present
+            create: yes
+      - name: update cache
+        apt:
+            update_cache: yes
+      - name: install haveged
+        apt:
+            name: havegd
+            state: present
+      - name: install mongodb
+        apt:
+            name: mongodb-org
+            state: present
