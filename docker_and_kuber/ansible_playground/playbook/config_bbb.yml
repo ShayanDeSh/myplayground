@@ -20,7 +20,7 @@
           - "ppa:libreoffice/ppa"
           - "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse"
           - "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse"
-          - "deb https://ubuntu.bigbluebutton.org/xenial-110/ bigbluebutton-xenial main"
+          - "deb https://ubuntu.bigbluebutton.org/xenial-22/ bigbluebutton-xenial main"
         tags:
             - install
       - name: add monogodb ppa key
@@ -52,7 +52,7 @@
             - bigbluebutton
             - bbb-html5
         tags:
-            - install
+            - apt_install
       - name: dist upgrade
         apt:
             upgrade: dist
