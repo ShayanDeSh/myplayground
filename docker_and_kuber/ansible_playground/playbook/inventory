@@ -1,4 +1,12 @@
-[turn]
-server1
 [bbb]
+server1
+
+[bbb:vars]
+ansible_become_pass='el@098'
+
+[turn]
 server2
+
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

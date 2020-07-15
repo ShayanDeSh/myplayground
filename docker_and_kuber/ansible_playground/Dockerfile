@@ -6,7 +6,7 @@ Run apt-get update && \
 
 Run apt-get update && \
     apt-get install -y build-essential python python-dev libxml2-dev \
-    libxslt-dev libssl-dev zlib1g-dev libyaml-dev libffi-dev && \
+    libxslt-dev libcurl3 python3-pip libssl-dev zlib1g-dev libyaml-dev libffi-dev && \
     wget https://bootstrap.pypa.io/get-pip.py && \
     python2 get-pip.py
 

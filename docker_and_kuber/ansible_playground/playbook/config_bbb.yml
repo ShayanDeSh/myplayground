@@ -1,58 +1,86 @@
 ---
 - hosts: server1
+  become: true
   tasks:
-      - name: adding cerbot repository
-        apt_repository:
-            repo: 'ppa:certbot/certbot'
-            update_cache: false
-            state: present
-      - name: install certbot
+      - name: install common-properties
         apt:
-            name: certbot
+            name: software-properties-common
             state: present
-      - name: install nginx
-        apt:
-            name: nginx
-            state: present
-      - name: adding bigbluebutton repo
+        tags:
+            - install
+      - name: add repositories
         apt_repository:
-            repo: 'ppa:bigbluebutton/support'
+            repo: "{{ item }}"
             update_cache: false
             state: present
-      - name: adding rmescandon repo
-        apt_repository:
-            repo: 'ppa:rmescandon/yq'
-            update_cache: false
-            state: present
-      - name: adding libreoffice repo (needed for conversion)
-        apt_repository:
-            repo: 'ppa:libreoffice/ppa'
-            update_cache: false
-            state: present
+        loop:
+          - "ppa:certbot/certbot"
+          - "ppa:bigbluebutton/support"
+          - "ppa:rmescandon/yq"
+          - "ppa:libreoffice/ppa"
+          - "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse"
+          - "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse"
+          - "deb https://ubuntu.bigbluebutton.org/xenial-110/ bigbluebutton-xenial main"
+        tags:
+            - install
       - name: add monogodb ppa key
         apt_key:
-            url: https://www.mongodb.org/static/pgp/server-3.4.asc
+            url: https://www.mongodb.org/static/pgp/server-4.2.asc
             state: present
-      - name: Add havegd to source list
+        tags:
+            - install
+      - name: bbb key
+        apt_key:
+            url: https://ubuntu.bigbluebutton.org/repo/bigbluebutton.asc
+            state: present
+        tags:
+            - install
+      - name: apt-get update
+        apt:
+            update_cache: true
+        tags:
+            - install
+      - name: apt-get install
+        apt:
+            pkg: 
+            - certbot
+            - nginx
+            - gnupg
+            - haveged
+            - mongodb-org
+            - nodejs
+            - bigbluebutton
+            - bbb-html5
+        tags:
+            - install
+      - name: dist upgrade
+        apt:
+            upgrade: dist
+        tags:
+            - install
+      - name: bbb-conf set-ip
+        command: bbb-conf --setip meet.ce.aut.ac.ir
+        tags:
+            - config
+      - name: copy-nginx-config
+        copy:
+            src: ./files/bigbluebutton
+            dest: /etc/nginx/sites-available/bigbluebutton
+            mode: '0644'
+            backup: yes 
+        tags:
+            - config
+      - name: restart nginx
+        service:
+            name: nginx
+            state: restarted
+            enables: yes
+        tags: config
+      - name: replace https and port in sip.nginx
         lineinfile:
-            line: "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse"
-            path: /etc/apt/sources.list.d/mongodb.list
+            path: /etc/bigbluebutton/nginx/sip.nginx
+            regexp: 'proxy_pass'
+            line: 'proxy_pass https://172.23.132.123:7443;'
             state: present
-            create: yes
-      - name: Add mongo to source list
-        lineinfile:
-            line: "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse"
-            path: /etc/apt/sources.list.d/mongodb.list
-            state: present
-            create: yes
-      - name: update cache
-        apt:
-            update_cache: yes
-      - name: install haveged
-        apt:
-            name: havegd
-            state: present
-      - name: install mongodb
-        apt:
-            name: mongodb-org
-            state: present
+        tags: config
+
