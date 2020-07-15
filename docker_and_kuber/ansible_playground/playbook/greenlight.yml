@@ -1,0 +1,33 @@
+---
+- hosts: server1
+  become: true
+  tasks:
+    - name: add monogodb ppa key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+    - name: add docker repo
+      apt_repository:
+          repo: "deb [arch=amd64] https://download.docker.com/linux/debian xenial stable" 
+          state: present
+          update_cache: true
+
+    - name: install docker
+      apt:
+        name:
+          - apt-transport-https 
+          - ca-certificates
+          - gnupg-agent
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: create greenlight directory
+      file:
+        path: /home/elmi/greenlight
+        state: directory
+      
+    - name: make env and install greenlight
+      shell: docker run --rm bigbluebutton/greenlight:v2 cat ./sample.env > .env
+
