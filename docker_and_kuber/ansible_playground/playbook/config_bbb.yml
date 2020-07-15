@@ -21,6 +21,7 @@
           - "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.2 multiverse"
           - "deb http://archive.ubuntu.com/ubuntu/ xenial multiverse"
           - "deb https://ubuntu.bigbluebutton.org/xenial-22/ bigbluebutton-xenial main"
+          - "deb https://deb.nodesource.com/node_10.x xenial main"
         tags:
             - install
       - name: add monogodb ppa key
@@ -35,6 +36,10 @@
             state: present
         tags:
             - install
+      - name: nodejs apt_key
+        apt_key:
+            url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key 
+            state: present
       - name: apt-get update
         apt:
             update_cache: true
@@ -74,13 +79,13 @@
         service:
             name: nginx
             state: restarted
-            enables: yes
+            enabled: yes
         tags: config
       - name: replace https and port in sip.nginx
         lineinfile:
             path: /etc/bigbluebutton/nginx/sip.nginx
             regexp: 'proxy_pass'
-            line: 'proxy_pass https://172.23.132.123:7443;'
+            line: 'proxy_pass https://$freeswitch_addr:7443;'
             state: present
         tags: config
 
