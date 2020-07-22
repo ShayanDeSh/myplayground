@@ -1,0 +1,19 @@
+apiVersion: app
+kind: Deployment
+metadata:
+    labels:
+        app: wishteam.gitlab 
+    name: gitlab-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabel:
+            app: wishteam.gitlab
+    template:
+        metadata:
+            labels:
+                app: wishteam.gitlab
+        spec:
+            containers:
+                - image: gitlab/gitlab-ce
+                  name: gitlab
