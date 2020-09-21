@@ -10,4 +10,11 @@ outcome Scissors Paper       = Win
 outcome us them | us == them = Tie
                 | otherwise  = Lose
 
-main = print (outcome Rock Scissors)
+
+parseMove :: String -> Maybe Move
+parseMove str = case reads str of 
+                  [(m, rest)] | ok rest -> Just m
+                  _                     -> Nothing
+        where ok = all (`elem` " \n\r")
+
+main = print (parseMove "Paper ")
